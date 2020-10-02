@@ -5,12 +5,14 @@ env:
   SWIFTSHADER_SHA: 0f14b7ab7a550971c97090a7cd4b9910084fe7ea
 
 on: push
-# on: workflow_dispatch
+# on:
+#   workflow_dispatch:
 
 jobs:
   swiftshader:
     name: Clone and Build SwiftShader
-    runs-on: macos-latest
+    runs-on: ubuntu-16.04
+    #runs-on: macos-latest
     steps:
 
     - name: Check cache
@@ -25,6 +27,9 @@ jobs:
       run: |
         git clone https://github.com/google/swiftshader --branch master --single-branch swiftshader
 
+    # SwiftShader takes a while to build; note thate it includes LLVM.
+    # We intentionally leave off the "-j" when invoking make.
+    # Seems to make the job more reliable (makes the output easier to follow too).
     - name: Build SwiftShader
       if: steps.cache.outputs.cache-hit != 'true'
       working-directory: swiftshader
@@ -32,7 +37,7 @@ jobs:
         git config advice.detachedHead false
         git checkout ${SWIFTSHADER_SHA}
         cd build
-        cmake .. && make -j
+        cmake .. && make
 
   filament:
     name: Build Filament with SwiftShader support
