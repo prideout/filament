@@ -33,11 +33,11 @@ jobs:
         mkdir build ; cd build
         cmake .. && make -j
 
-  filament:
-    name: Build Filament with SwiftShader support
-    runs-on: ubuntu-latest
-    needs: swiftshader
-    steps:
-    - uses: actions/checkout@v1
-    - run: |
-      ls swiftshader/build
+  # filament:
+  #   name: Build Filament with SwiftShader support
+  #   runs-on: ubuntu-latest
+  #   needs: swiftshader
+  #   steps:
+  #   - uses: actions/checkout@v1
+  #   - run: |
+  #     ls swiftshader/build
