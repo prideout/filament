@@ -29,8 +29,9 @@ jobs:
     - name: Build SwiftShader
       working-directory: swiftshader
       run: |
+        git config advice.detachedHead false
         git checkout 16636f4
-        mkdir build ; cd build
+        cd build
         cmake .. && make -j
 
   # filament:
