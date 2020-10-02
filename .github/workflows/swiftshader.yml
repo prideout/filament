@@ -2,6 +2,7 @@ name: SwiftShader
 
 env:
   SWIFTSHADER_LD_LIBRARY_PATH: swiftshader/build
+  SWIFTSHADER_SHA: master
 
 # on: workflow_dispatch
 
@@ -30,15 +31,19 @@ jobs:
       working-directory: swiftshader
       run: |
         git config advice.detachedHead false
-        git checkout 16636f4
+        git checkout ${SWIFTSHADER_SHA}
         cd build
         cmake .. && make -j
 
-  # filament:
-  #   name: Build Filament with SwiftShader support
-  #   runs-on: ubuntu-latest
-  #   needs: swiftshader
-  #   steps:
-  #   - uses: actions/checkout@v1
-  #   - run: |
-  #     ls swiftshader/build
+  filament:
+    name: Build Filament with SwiftShader support
+    runs-on: ubuntu-latest
+    needs: swiftshader
+    steps:
+    - uses: actions/checkout@v1
+    - name: Verify SwiftShader library
+      run: |
+        ls swiftshader/build
+    - name: Build Filament with SwiftShader support
+      run: |
+        ./build.sh -t release gltf_viewer
