@@ -10,7 +10,7 @@ on: push
 jobs:
   swiftshader:
     name: Clone and Build SwiftShader
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
 
     - name: Check cache
