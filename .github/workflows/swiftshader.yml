@@ -12,18 +12,20 @@ jobs:
     name: Clone and Build SwiftShader
     runs-on: ubuntu-latest
     steps:
-    - name: Check cache
-      uses: actions/cache@v2
-      env:
-        cache-name: cache-swiftshader
-      with:
-        path: swiftshader
-        key: ${{ runner.os }}-build-16636f4
-        restore-keys: |
-          ${{ runner.os }}-build-
+    # - name: Check cache
+    #   uses: actions/cache@v2
+    #   env:
+    #     cache-name: cache-swiftshader
+    #   with:
+    #     path: swiftshader
+    #     key: ${{ runner.os }}-build-16636f4
+    #     restore-keys: |
+    #       ${{ runner.os }}-build-
+
     - name: Clone SwiftShader
       run: |
         git clone https://github.com/google/swiftshader --branch master --single-branch swiftshader
+
     - name: Build SwiftShader
       working-directory: swiftshader
       run: |
